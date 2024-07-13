@@ -56,7 +56,7 @@ export const InitialModal=()=>{
             await axios.post("/api/servers",values);
             form.reset();
             router.refresh();
-            window.location.reload();
+            window.location.reload(); 
         }
         catch(error){
             console.log(error);
