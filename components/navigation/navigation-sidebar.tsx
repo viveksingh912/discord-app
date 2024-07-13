@@ -2,9 +2,12 @@ import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-import { NavigationAction } from "./navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import NavigationItem from "./navigation-item";
+import { NavigationAction } from "./navigation-action";
+import { ModeToggle } from "../mode-toggle";
+import { UserButton } from "@clerk/nextjs";
 
 const NavigationSidebar = async () => {
   const profile = await currentProfile();
@@ -33,12 +36,25 @@ const NavigationSidebar = async () => {
       <ScrollArea className="flex-1 w-full">
         {
           servers.map((server)=>{
-            return <div key={server.id}>
-              {server.name}
+            return <div key={server.id} className="mb-4">
+              <NavigationItem
+              id={server.id}
+              name={server.name}
+              imageUrl={server.imageUrl}/>
             </div>
           })
         }
       </ScrollArea>
+      <div className="pb-3 mt-auto flex  items-center flex-col gap-y-4">
+        <ModeToggle/>
+        <UserButton
+        afterSignOutUrl="/"
+        appearance={{
+          elements:{
+            avatarBox: "h-[48px] w-[48px]"
+          }
+        }}/>
+      </div>
     </div>
   );
 };
