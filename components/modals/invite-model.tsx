@@ -26,6 +26,7 @@ export const InviteModal = () => {
 
   const isModelOpen = isOpen && type == "invite";
   const {server} = data;
+  // console.log(data);
 
   const onCopy= ()=>{
     navigator.clipboard.writeText(inviteUrl);
