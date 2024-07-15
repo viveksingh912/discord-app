@@ -78,3 +78,10 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .display-md-flex{
+    display: none;
+    @media (min-width: 768px) {
+      display: flex !important;
+    }
+  }
