@@ -65,7 +65,7 @@ export const ChatItem = ({
   useEffect(()=>{
     const handleKeyDown=(event: any)=>{
         if(event.key ==="Escape" || event.keyCode===27){
-            setIsDeleting(false);
+            setIsEditing(false);
         }
     }
     window.addEventListener("keydown",handleKeyDown);
