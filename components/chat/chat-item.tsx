@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { useRouter,useParams } from "next/navigation";
 
 interface ChatItemProps {
   id: string;
@@ -61,6 +62,15 @@ export const ChatItem = ({
 }: ChatItemProps) => {
   const [isEditing, setIsEditing]= useState(false);
   const {onOpen} = useModal();
+
+  const params=useParams();
+  const router=useRouter();
+  const onMemberClick=()=>{
+    if(member.id ===currentMember.id){
+      return;
+    }
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+  }
 
   useEffect(()=>{
     const handleKeyDown=(event: any)=>{
@@ -119,6 +129,7 @@ export const ChatItem = ({
             w-full"
       >
         <div
+        onClick={onMemberClick}
           className="cursor-pointer hover:drop-shadow-md
                 transition"
         >
@@ -128,6 +139,7 @@ export const ChatItem = ({
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p
+              onClick={onMemberClick}
                 className="font-semibold text-sm
                             hover:underline cursor-pointer"
               >

@@ -6,12 +6,13 @@ import { useChatQuery } from "@/hooks/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
 import { ChatItem } from "./chat-item";
-import {format} from "date-fns";
+import { format } from "date-fns";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
-const DATE_FORMAT="d MMM yyyy, HH";
+const DATE_FORMAT = "d MMM yyyy, HH";
 
 type MessageWithMemberWithProfile = Message & {
-    member: Member &{
+    member: Member & {
         profile: Profile
     }
 }
@@ -30,19 +31,22 @@ interface ChatMessagesProps {
 export const ChatMessages = ({ name, member, chatId, apiUrl,
     socketUrl, socketQuery, paramKey, paramValue, type
 }: ChatMessagesProps) => {
-    const queryKey=`chat:${chatId}`;
-    const {data,
+    const queryKey = `chat:${chatId}`;
+    const addKey = `chat:${chatId}:messages`;
+    const updateKey = `chat:${chatId}:messages:update`;
+    const { data,
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
         status
-    }=useChatQuery({
+    } = useChatQuery({
         queryKey,
         apiUrl,
         paramKey,
         paramValue,
     })
 
+    useChatSocket({ addKey, queryKey, updateKey })
     // if(status ==="loading"){
     //     return(
     //         <div className="flex flex-col flex-1 justify-center
@@ -54,8 +58,8 @@ export const ChatMessages = ({ name, member, chatId, apiUrl,
     //         </div>
     //     )
     // }
-    if(status ==="error"){
-        return(
+    if (status === "error") {
+        return (
             <div className="flex flex-col flex-1 justify-center
             items-center">
                 <ServerCrash className="h-7 w-7  text-zinc-500 
@@ -75,20 +79,20 @@ export const ChatMessages = ({ name, member, chatId, apiUrl,
                 type={type}
                 name={name} />
             <div className="flex flex-col-reverse mt-auto">
-                {data?.pages?.map((group,i)=>(
+                {data?.pages?.map((group, i) => (
                     <Fragment key={i}>
-                        {group.items.map((message: MessageWithMemberWithProfile)=>(
+                        {group.items.map((message: MessageWithMemberWithProfile) => (
                             <ChatItem key={message.id}
-                            currentMember={member}
-                            member={message.member}
-                            id={message.id}
-                            content={message.content}
-                            fileUrl={message.fileUrl}
-                            deleted={message.deleted}
-                            timestamp={format(new Date(message.createdAt),DATE_FORMAT)}
-                            isUpdated={message.updatedAt !== message.createdAt}
-                            socketUrl={socketUrl}
-                            socketQuery={socketQuery}
+                                currentMember={member}
+                                member={message.member}
+                                id={message.id}
+                                content={message.content}
+                                fileUrl={message.fileUrl}
+                                deleted={message.deleted}
+                                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                                isUpdated={message.updatedAt !== message.createdAt}
+                                socketUrl={socketUrl}
+                                socketQuery={socketQuery}
                             />
                         ))}
                     </Fragment>

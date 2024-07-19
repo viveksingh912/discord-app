@@ -42,7 +42,6 @@ export const EditServerModal=()=>{
 
     const isModelOpen= isOpen && type =="editServer";
     const {server}= data;
-    console.log(server);
 
     const form=useForm({
         resolver:zodResolver(formSchema),
