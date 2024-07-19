@@ -1,6 +1,6 @@
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
-import { redirectToSignIn } from "@clerk/nextjs/server";
+import { auth, redirectToSignIn } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 interface ServerIdPageProgs {
@@ -12,7 +12,7 @@ const ServerPage = async ({ params }: ServerIdPageProgs) => {
     const profile = await currentProfile();
 
     if(!profile){
-        return  redirectToSignIn();
+        return auth().redirectToSignIn();
     }
 
     const server=await  db.server.findUnique({
