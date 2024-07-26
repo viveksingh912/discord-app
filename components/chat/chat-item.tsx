@@ -221,7 +221,7 @@ export const ChatItem = ({
                                     dark:bg-zinc-700/75 border-none
                                     border-0 focus-visible:ring-0
                                     focus-visible:ring-offset-0
-                                    text-zinc-600"
+                                    text-zinc-600 dark:text-zinc-400"
                                     placeholder="Edited message"/>
                                 </div>
                             </FormControl>
