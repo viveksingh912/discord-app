@@ -176,7 +176,7 @@ export const ChatItem = ({
           )}
           {isPdf && (
             <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
-              <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-200" />
+              {/* <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-200" />
               <a
                 href={fileUrl}
                 target="_blank"
@@ -185,7 +185,8 @@ export const ChatItem = ({
                           hover:underline"
               >
                 PDF FILE
-              </a>
+              </a> */}
+              <iframe src={fileUrl} allowFullScreen></iframe>
             </div>
           )}
           {!fileUrl && !isEditing  &&(
