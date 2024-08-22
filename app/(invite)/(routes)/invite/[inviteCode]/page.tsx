@@ -1,6 +1,6 @@
-import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
-import { auth, redirectToSignIn } from "@clerk/nextjs/server";
+import { initialProfile } from "@/lib/initial-profile";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 interface InvideCodePageProps{
@@ -9,7 +9,7 @@ interface InvideCodePageProps{
     }
 }
 const InviteCodePage = async({params}:InvideCodePageProps) => {
-    const profile = await currentProfile();
+    const profile = await initialProfile();
 
     if(!profile){
         return auth().redirectToSignIn();
